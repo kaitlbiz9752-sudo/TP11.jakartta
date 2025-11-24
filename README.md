@@ -62,6 +62,10 @@ ma.ens.security
 
 
 
+<img width="677" height="859" alt="image" src="https://github.com/user-attachments/assets/e406e5b0-42d7-4139-92bc-009a4cda36db" />
+
+
+
 ## Configuration de la base de données
 
 **Fichier application.properties :**
@@ -112,25 +116,29 @@ jdbc:mysql://localhost:3306/security_jwt
 User (Many) ↔ (Many) Role
 ```
 
-🔐 Fonctionnement du JWT
+## Fonctionnement du JWT
 
-Chaque utilisateur authentifié reçoit un token contenant :
+**Chaque utilisateur authentifié reçoit un token contenant :**
 
-son username
+- son username
 
-sa date d’expiration
+- sa date d’expiration
 
-une signature cryptée
+- une signature cryptée
 
-Le serveur ne stocke rien : toute la vérification se fait sur le token reçu.
+- Le serveur ne stocke rien : toute la vérification se fait sur le token reçu.
 
-Le token doit être transmis dans chaque requête sécurisée :
+**Le token doit être transmis dans chaque requête sécurisée :**
 
+```text
 Authorization: Bearer <token>
+```
 
-🧩 Flow d’authentification
 
-Le client appelle
+
+## Flow d’authentification
+
+**Le client appelle**
 
 ```text
 POST /api/auth/login
@@ -140,32 +148,34 @@ POST /api/auth/login
 
 avec :
 
-username
 
-password
+- username
 
-Spring Security vérifie l’utilisateur
+ password
 
-Le serveur renvoie un token JWT
+- Spring Security vérifie l’utilisateur
 
-Le client utilise ce token pour accéder aux routes sécurisées
+- Le serveur renvoie un token JWT
 
-Le filtre JwtAuthorizationFilter :
+- Le client utilise ce token pour accéder aux routes sécurisées
 
-extrait le token
+**Le filtre JwtAuthorizationFilter :**
 
-vérifie la signature
+- extrait le token
 
-reconstruit l’utilisateur dans Spring Security
+- vérifie la signature
 
-🔐 Protection des routes
+- reconstruit l’utilisateur dans Spring Security
 
-Routes publiques :
+## Protection des routes
 
+**Routes publiques :**
+
+```text
 /api/auth/**
+```
 
-
-Routes protégées :
+**Routes protégées :**
 
 
 ```text
@@ -175,17 +185,19 @@ Routes protégées :
 
 
 
-L’API est totalement stateless (aucune session enregistrée).
+- L’API est totalement stateless (aucune session enregistrée).
 
-🧪 Tests avec Postman
-✔️ 1. Authentification
+## Tests avec Postman
+ 1. Authentification
 
-POST
+- POST
 
+
+```text
 http://localhost:8080/api/auth/login
+```
 
-
-Body JSON :
+**Body JSON :**
 
 
 ```text
@@ -196,7 +208,7 @@ Body JSON :
 ```
 
 
-Réponse attendue :
+**Réponse attendue :**
 
 
 
@@ -208,23 +220,27 @@ Réponse attendue :
 }
 ```
 
+<img width="1393" height="752" alt="tp11 1" src="https://github.com/user-attachments/assets/2bd1ec7c-2be7-4f5d-a32a-24312d06e820" />
 
 
-✔️ 2. Accès à une route protégée
 
-GET
+
+ 2. Accès à une route protégée
+
+- GET
 
 
 ```text
 http://localhost:8080/api/user/profile
 ```
 
-Headers :
+**Headers :**
 
+```text
 Authorization: Bearer <TOKEN_COPIÉ>
+```
 
-
-Réponse attendue :
+**Réponse attendue :**
 
 
 ```text
@@ -234,43 +250,35 @@ Réponse attendue :
 }
 ```
 
+<img width="1918" height="800" alt="TP11 2" src="https://github.com/user-attachments/assets/147efc85-d31d-4241-89c6-2a49a5a04952" />
 
 
-❌ 3. Cas d’erreur : Token manquant ou invalide
 
-(Comportement attendu)
+ 3. Cas d’erreur : Token manquant ou invalide
 
-Réponse :
+
+
+**Réponse :**
 
 ```text
 404
 ```
 
+<img width="1440" height="546" alt="TP11 3" src="https://github.com/user-attachments/assets/3b7eb120-7972-4f38-8fd3-68c94d972d0e" />
 
 
-🔍 Points clés à comprendre
+## Points clés à comprendre
 
-HTTP est stateless ⇒ JWT permet de vérifier l’identité sans session
+- HTTP est stateless ⇒ JWT permet de vérifier l’identité sans session
 
-Un token expiré doit être régénéré
+- Un token expiré doit être régénéré
 
-Le secret doit être long et sécurisé
+- Le secret doit être long et sécurisé
 
-Le filtre JWT remplace totalement les sessions classiques
+- Le filtre JWT remplace totalement les sessions classiques
 
-Spring Security bloque automatiquement les utilisateurs non authentifiés
+- Spring Security bloque automatiquement les utilisateurs non authentifiés
 
-📦 Livrables du TP
 
-Code source complet
 
-README.md (ce fichier)
-
-Screenshot Postman :
-
-Login réussi + token
-
-Accès d’une route sécurisée
-
-Accès refusé sans token
 

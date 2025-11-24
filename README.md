@@ -1,4 +1,4 @@
-## TP – Sécurisation d’une API REST avec JWT (Spring Boot 3 + Spring Security 6)
+## TP – Sécurisation d’une API REST avec JWT (Spring Boot 3 + Spring Security 
 
 
 **Objectif du TP**
@@ -278,6 +278,7 @@ Authorization: Bearer <TOKEN_COPIÉ>
 - Le filtre JWT remplace totalement les sessions classiques
 
 - Spring Security bloque automatiquement les utilisateurs non authentifiés
+
 
 
 
